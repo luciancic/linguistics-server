@@ -3,13 +3,13 @@ from flask import Flask, request, send_file
 from gtts import gTTS
 import speech_recognition as sr
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-@app.route('/')
+@application.route('/')
 def hello_world():
     return 'Hello, World!'
     
-@app.route('/audio', methods=['POST'])
+@application.route('/audio', methods=['POST'])
 def audio():
     with open('audio.mp4', 'wb') as file:
         file.write(request.data)
@@ -25,7 +25,7 @@ def audio():
         os.remove('audio.wav')
         return text
 
-@app.route('/text')
+@application.route('/text')
 def text():
     text = request.args.get('text')
     tts = gTTS(text, lang='fr')
@@ -34,4 +34,4 @@ def text():
         return send_file(file)
 
 if __name__ == '__main__':
-    app.run()
+    application.run()
