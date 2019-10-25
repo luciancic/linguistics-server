@@ -1,6 +1,6 @@
-from os import path
 import os
-from flask import Flask, request
+from flask import Flask, request, send_file
+from gtts import gTTS
 import speech_recognition as sr
 
 app = Flask(__name__)
@@ -25,5 +25,13 @@ def audio():
         os.remove('audio.wav')
         return text
 
+@app.route('/text')
+def text():
+    text = request.args.get('text')
+    tts = gTTS(text, lang='fr')
+    with open('audio.mp3', 'wb') as file:
+        tts.write_to_fp(file)
+        return send_file(file)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
