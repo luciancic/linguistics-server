@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, send_file
 from gtts import gTTS
+import ffmpeg
 import speech_recognition as sr
 
 application = Flask(__name__)
@@ -14,7 +15,7 @@ def audio():
     with open('audio.mp4', 'wb') as file:
         file.write(request.data)
     r = sr.Recognizer()
-    os.system('ffmpeg -i audio.mp4 audio.wav')
+    ffmpeg.input('audio.mp4').output('audio.wav').run()
     with sr.AudioFile('audio.wav') as source:
         audio = r.record(source)
     text = 'Something the recogniser doesn\'t understand'
