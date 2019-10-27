@@ -31,7 +31,7 @@ def text():
     tts = gTTS(text, lang='fr')
     with open('audio.mp3', 'wb') as file:
         tts.write_to_fp(file)
-        return send_file(file)
+    return send_file('audio.mp3')
 
 if __name__ == '__main__':
     application.run()
